@@ -49,7 +49,7 @@ Destacam-se:
 
 
 ### Exploit
-Não se conhece nenhum exploit que se aproveite de Meltdown.
+Não se conhece nenhum exploit com grande impacto de Meltdown.
 
 No entanto, há 3 ataques proof of concept que tentam demonstrar possíveis aplicações maliciosas de Spectre.
 
