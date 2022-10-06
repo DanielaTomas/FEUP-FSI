@@ -60,4 +60,6 @@ No entanto, há 3 ataques proof of concept que tentam demonstrar possíveis apli
 >Spook.js, Setembro de 2022, Google, conseguia roubar dados reais mesmo em versões do Google Chrome com proteção anti-spectre (isolamento de páginas em processos diferentes).
 
 ### Ataques 
+Não foram encontrados ataques causados pelo Meltdown.
+
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/fq3abPnEEGE/0.jpg)](https://www.youtube.com/watch?v=fq3abPnEEGE)
