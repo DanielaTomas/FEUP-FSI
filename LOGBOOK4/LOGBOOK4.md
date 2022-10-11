@@ -7,7 +7,7 @@
 Printenv:![](https://i.imgur.com/W5N1TKh.png)
 Env:![](https://i.imgur.com/4e9lhh2.png)
 Printenv PWD:
-![](https://i.imgur.com/mH41xV4.png)
+![](https://i.imgur.com/mH41xV4.png)  
 Export:![](https://i.imgur.com/6fkGIjO.png)
 
 ## Task 2
