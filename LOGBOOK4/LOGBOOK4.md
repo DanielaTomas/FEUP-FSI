@@ -172,7 +172,7 @@ Os resultados estão nos *screenshots* seguintes:
 
 # CTF
 
-### Vulnerabilidade encontrada
+### Vulnerabilidade encontrada:
 Booster for Woocommerce, plugin do WordPress, é vulnerável a bypass de autenticação por e-mail até à versão 5.4.3, CVE-2021-34646.
 
 ### Utilizadores identificados:
