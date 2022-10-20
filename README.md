@@ -3,6 +3,6 @@
 * **Grupo:** L05G06 
 * **Turma:** 3LEIC05
 * **Alunos:**
-    - Aluno1 upZZZZZ 
+    - Daniela dos Santos Tomás, up202004946
     - Diogo Alexandre da Costa Melo Moreira da Fonte, up202004175
-    - Aluno3 upZZZZZ
+    - Miguel Faria Curval, up201105191
