@@ -211,19 +211,78 @@ O que explicaria os 99 caractéres, e o overflow caso o buffer tenha menos de 10
 
 ![](https://i.imgur.com/W1oAIt0.png)
 
-![](https://media.tenor.com/HIy0fIrpHq8AAAAC/apm-apmtv3.gif)
+![](https://i.imgur.com/trXH29d.png)
 
-Algumas funções de input de C colocam '\0' além do que é lido para prevenir overruns, fgets é uma delas.
+Algumas funções de input de C colocam '\0' além do que é lido para prevenir overruns, fgets é uma delas. (Spoiler: isto vai ser útil mais tarde)
 
-Podemos usar este facto para colocar um '\0' em determinada posição se precisarmos.
+Já que a stack não é executável, podemos usar um ataque chamado Return to Libc, ou ret2libc, que consiste em dar overwrite ao valor de retorno, mas em vez de saltarmos para o shellcode ou NOP-sled, saltamos para um endereço da libc.
+Normalmente usa-se a função system, com um único argumento, um pointer para a string "/bin/sh".
 
-Para já sabemos que podemos mandar 100 caractéres para um buffer com format string vulnerability
+Para fazermos o exploit, precisamos de encontrar alguns valores na libc primeiro.
 
+Offset da função system a partir do início da libc:
 
+![](https://i.imgur.com/x8jNNsn.png)
 
+Offset da string "/bin/sh" a partir do início da libc:
 
+![](https://i.imgur.com/MUgEO8Z.png)
 
+Precisamos também do endereço base da libc na nossa máquina SEM ASLR.
 
+Desativamos ASLR:
 
+![](https://i.imgur.com/xahoQ5w.png)
 
+IMPORTANTE: não esquecer de usar a library que nos é dada:
+
+![](https://i.imgur.com/OtKy1PI.png)
+
+E com gdb encontramos onde está mapeada a libc:
+
+![](https://i.imgur.com/SkEgJiL.png)
+
+Qualquer endereço entre 0xf7d89000 e 0xf7f2b000 é um valor da libc, ou seja, se encontrarmos um desses valores, podemos usá-lo como referência e encontrar a distância entre um endereço sem ASLR, e com ASLR.
+
+Usamos um script para descobrir valores na stack.
+
+![](https://i.imgur.com/rKKvPTu.png)
+
+![](https://i.imgur.com/yNdT9mc.png)
+
+Index 8 é o canário, se corrermos várias vezes reparamos que acaba sempre em 0x00, teremos de usar fgets para inserir um '\0' nessa posição, index 20 do buffer.
+
+Index 11 é um valor da libc, podemos usar este valor 0xf7daa519 para calcular a diferença devido a ASLR.
+
+Já que o programa corre numa loop, enviamos payloads diferentes em várias iterações, para fins diferentes:
+ - primeiro extrair canário, e valor de referência para calcular o offset ASLR,
+ - segundo dar overwrite ao endereço de retorno,
+ - terceiro escrever '\0' no index 20 do buffer.
+
+Criámos uma função para facilitar a passagem pela loop e o envio de payloads para o buffer vulnerável:
+
+![](https://i.imgur.com/ygDpZ42.png)
+
+Tudo a postos:
+
+![](https://i.imgur.com/hijaVsU.png)
+
+Enviamos o primeiro payload, extraímos o canário e o valor de referência, e calculamos os endereços reais da função system e da string "/bin/sh":
+
+![](https://i.imgur.com/gB2opT7.png)
+
+Enviamos a segunda payload:
+
+![](https://i.imgur.com/07j0gFk.png)
+
+(Adicionamos 1 ao canário porque não podemos enviar nenhum byte a 0, e sabemos que o LSB do canário é 0)
+
+E finalmente enviamos 0 de volta ao LSB do canário:
+
+![](https://i.imgur.com/K59lr6I.png)
+![](https://i.imgur.com/FRcSbjX.png)
+
+![](https://i.imgur.com/Kqg9ndz.png)
+
+![](https://i.imgur.com/OuyDEK2.png)
 
