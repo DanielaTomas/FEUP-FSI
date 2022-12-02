@@ -121,3 +121,109 @@ Colocamos `Boby', Password='7110eda4d09e062aa5e4a390b0a572ac0d2c0220' where Name
 ![](https://i.imgur.com/x5gI06k.png)
 
 ![](https://i.imgur.com/sENqWZQ.png)
+
+
+### CTFs
+
+## Desafio 1
+
+A nossa tarefa é entrar no servidor com a conta admin.
+Explorando a source da página de entrada, encontramos a seguinte linha:
+
+![](https://i.imgur.com/B1clQOr.png)
+
+Se o nosso username for:
+
+![](https://i.imgur.com/dr19oU8.png)
+
+Estaremos a terminar a string mais cedo, e tudo o que vem a seguir ao "--" passará a ser apenas um comment.
+
+Usamos uma qualquer password já que não podemos deixar em branco.
+
+![](https://i.imgur.com/16df3BN.png)
+
+"I'm in."
+
+![](https://i.imgur.com/kRUhnZF.png)
+
+## Desafio 2
+
+Começamos por explorar a source, e verificar as proteções do executável.
+
+![](https://i.imgur.com/F6YtrTz.png)
+
+Certamente o nosso professor diria "A stack é executável, e não há canário. Ya?"
+
+A cereja no topo do bolo é mesmo o programa dar-nos o endereço exato do buffer, em runtime.
+
+![](https://i.imgur.com/wZftkU3.png)
+
+Algo que podemos extrair no nosso script.
+
+![](https://i.imgur.com/gLIPRTd.png)
+
+A receita da payload, é:
+- Shellcode,
+- (tamanho do buffer + 8 - tamanho do shellcode) Caractéres de lixo,
+- Endereço do buffer.
+
+O return address fica 8 bytes acima do fim do buffer, daí adicionarmos 8 aos caractéres de lixo.
+Também podiamos ter usado um padrão cíclico juntamente com gdb, para encontrar a posição do endereço de retorno, sem ter de a calcular.
+
+![](https://i.imgur.com/TmKFp3r.png)
+
+Chamamos também à atenção que não precisamos de NOP-sled, já que sabemos o endereço exato do buffer em runtime.
+
+![](https://i.imgur.com/rWzrtpw.png)
+
+## Echo
+
+![](https://i.imgur.com/IiUVY27.png)
+
+Boss battle.
+
+Vamos partir do princípio que ASLR está ligado também no servidor.
+
+Comecemos por explorar o programa:
+
+![](https://i.imgur.com/zOYSdJd.png)
+
+Se passarmos pelo menos 20 caractéres, o programa deteta stack smashing (o que significa que o canário foi alterado!).
+
+Isto é estranho, já que nos foi dito que no máximo poderiamos mandar 20 caractéres.
+Mas para já há algo mais importante a verificar:
+
+![](https://i.imgur.com/NGMDgZE.png)
+
+O mesmo buffer tem uma vulnerabilidade de format string.
+
+E igualmente interessante:
+
+![](https://i.imgur.com/gxq9zGj.png)
+
+Se passarmos mais do que 99 caractéres ao buffer, os caractéres adicionais não são lidos nessa operação.
+Sabemos o máximo de caractéres que podemos passar ao buffer.
+Isto também é mais um indicador do que referimos acima, na source poderemos ter:
+
+![](https://i.imgur.com/tMsNaP9.png)
+
+O que explicaria os 99 caractéres, e o overflow caso o buffer tenha menos de 100 bytes.
+
+![](https://i.imgur.com/W1oAIt0.png)
+
+![](https://media.tenor.com/HIy0fIrpHq8AAAAC/apm-apmtv3.gif)
+
+Algumas funções de input de C colocam '\0' além do que é lido para prevenir overruns, fgets é uma delas.
+
+Podemos usar este facto para colocar um '\0' em determinada posição se precisarmos.
+
+Para já sabemos que podemos mandar 100 caractéres para um buffer com format string vulnerability
+
+
+
+
+
+
+
+
+
