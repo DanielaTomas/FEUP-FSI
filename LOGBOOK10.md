@@ -72,7 +72,7 @@ Nesta e na próxima tarefa, pretendemos realizar um ataque semelhante ao que Sam
 
 Podemos adicionar Samy como amigo normalmente e, com a extensão HTTP Header Live, podemos descobrir como um HTTP request de amigo é codificado.
 
-![](https://i.imgur.com/6V7qjGW.png)
+![](https://i.imgur.com/Mu1WEtN.png)
 
 Utilizando esta informação, podemos criar um script que, ao ser executado, forja uma solicitação que adiciona Samy como amigo ao utilizador autenticado.
 
