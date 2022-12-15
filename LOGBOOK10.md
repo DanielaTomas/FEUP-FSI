@@ -46,7 +46,7 @@ Podemos atingir este objetivo introduzindo no campo "description" o seguinte có
 Na tarefa anterior, o código JavaScript malicioso escrito pelo invasor pode imprimir os cookies do utilizador, mas apenas o utilizador pode ver os cookies, não o invasor. Nesta tarefa, pretendemos que o código JavaScript envie os cookies para o invasor.
 
 Para conseguirmos fazer isto precisamos que o programa Javascript envie um HTTP request para o atacante, com as cookies anexados.
-Podemos usar uma tag <img> com o atributo src a apontar para a máquina do atacante. O browser vai tentar carregar a imagem, mas em vez disso vai fazer um pedido GET à máquna do invasor.
+Podemos usar uma tag img com o atributo src a apontar para a máquina do atacante. O browser vai tentar carregar a imagem, mas em vez disso vai fazer um pedido GET à máquna do invasor.
 
 O seguinte código JavaScript envia os cookies para a porta 5555 da máquina do invasor (com endereço IP 10.9.0.1), onde o invasor possui um servidor TCP pronto a ouvir na mesma porta.
 ```
