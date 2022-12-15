@@ -112,7 +112,7 @@ Depois de visitar o perfil do Samy:
 
 #### Question 1 - Explain the purpose of Lines ➀ and ➁, why are they needed?
 
-As linhas ➀ e ➁, marcadas no script da secção 4, servem para enviar o token elgg no request forjado para que o servidor avalie o request como um request válido do utilizador.
+As linhas ➀ e ➁, marcadas no script da secção 4, servem para enviar o token elgg no request forjado para que o servidor avalie o request como um request válido do utilizador. Estes tokens servem para prevenir Cross Site Request Forgery.
 
 #### Question 2 - If the Elgg application only provide the Editor mode for the "About Me" field, i.e., you cannot switch to the Text mode, can you still launch a successful attack?
 
