@@ -199,3 +199,40 @@ Primeiro, usámos a função *nextprime* do python para encontrar os números pr
 ![](https://i.imgur.com/JVp6Pi2.png)
 
 ### Desafio 2
+
+Neste desafio, o servidor envia duas mensagens cifradas com RSA que contêm a mesma flag. Ambas possuem o mesmo *n* mas dois expoentes públicos diferentes.
+
+Para recuperar a flag usámos o seguinte script:
+
+```python=
+from binascii import hexlify, unhexlify
+from sympy import *
+
+c_s = int.from_bytes(unhexlify(b"97ef898baeceb7a35a2ed1d8a4c2fcddc65637e5ada272858d5e1c2ff0abffac0937505868754eb72020ec1d4c20ecb4bb8e3aab775849b8df06c7ab2c9ffac865429619a730f80f676472cb3e68d363d893feb7b2b1fb167e7591fe202ce0d249fbb9d4c50d3215498865a5d89c6f2b04c955bde6e53c0069b5572bcb6233e38b4c1b3c9f8ee56e564bf75c6e08bf6b78e7755d7adca0303a3ebe8c0213525f24966c7629c617e6634172c338083a576f36a63300d1fde58d56c571624e3f627d9e148f545fba0c465a2d1d1be97dedf5b64531aaf3d290c0edd80a3f0281f53c5dbb83e4482bfdc6822302e2e88f3a006574e40478533bbb6b23db7c927765"),"big")
+c_j = int.from_bytes(unhexlify(b"ca05d6113f1e6454293c060017f60ac8ab238d614d4b1d997e7aabc5fd3621a06bb00dc043e43f0607ae17b9ad5f9433cd2da38d673c8301451150420340094467288d5a0e9a125a10828b4f581946884dc58a791a14ba15588237efacd1622ca29fc09f895ef35f5c1a3b18a59b21150ac813cc8595c9a1456e1be64a70567d392bf65a8e411a12d19a22e12d2d95f1768f4728749dd724f3fc56c733b6a1af4b40f7b6c0892eae88fb248724d27268a4a10c80503e689e67ce3f85dbc4d19fc5fd3ba5a3e16b025f9eb860d84c892b3a0d1190668c9332e76026e804ea74f7ce76fd3d73d6c6e5f634fb29564c3968b05b5d9643678f43c11dd94b9c173dc7"),"big")
+e_s = 0x10001
+e_j = 0x10003
+n = 29802384007335836114060790946940172263849688074203847205679161119246740969024691447256543750864846273960708438254311566283952628484424015493681621963467820718118574987867439608763479491101507201581057223558989005313208698460317488564288291082719699829753178633499407801126495589784600255076069467634364857018709745459288982060955372620312140134052685549203294828798700414465539743217609556452039466944664983781342587551185679334642222972770876019643835909446132146455764152958176465019970075319062952372134839912555603753959250424342115581031979523075376134933803222122260987279941806379954414425556495125737356327411
+
+def extended_euclidean(a, b):
+    if b == 0:
+        return (a, 1, 0)
+    gcd, x, y = extended_euclidean(b, a % b)
+    return (gcd, y, x - (a // b) * y)
+
+(gcd,a,b) = extended_euclidean(e_s, e_j)
+
+i = pow(c_j, -1, n)
+
+m = (pow(c_s,a,n)*pow(i,-b,n)) % n
+
+m = m.to_bytes(256,'big')
+
+print(m.decode())
+```
+
+*c_s* e *c_j* contêm as mensagens enviadas pelo sevidor e *e_s* e *e_j* as chaves públicas de *c_s* e *c_j*, respetivamente. 
+
+Se ```mdc(e_s,e_j) = 1```, então ```∃a,b∈Z: e_s*a + e_j*b = 1```. A partir de uma extensão do algoritmo de Euclides, calculámos os coeficientes *a* e *b* (*a* = 32769 e *b* = -32768). Como *b* é negativo, a equação ```m = (c_s^a * c_j^b) mod n``` daria problemas, por isso, calculámos o inverso modular de *c_j* (```i = c_j^(-1) mod n```) e, finalmente, obtivemos a mensagem com ```m = (c_s^a * i^(-b)) mod n```.
+
+![](https://i.imgur.com/wiDoyxg.png)
