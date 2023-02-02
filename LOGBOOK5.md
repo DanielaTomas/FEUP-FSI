@@ -178,7 +178,7 @@ FILE *fd = fopen(meme_file,"r"); -> e precisamos que meme_file seja "flag.txt\0"
 Usando pwntools, no scanf, enviámos um caracter arbitrário 20 vezes, seguido de 4 bytes com o endereço 0xfefc2223, seguido de "flag.txt\n".
 Importante notar que o endereço tem de ser enviado na ordem "\x23\x22\xfc\xfe", já que a máquina é little endian.
 
-### British Punctuality
+## British Punctuality
 
 -Passo 1, ler conteúdo dos ficheiros em ~/
 Lendo ~/main.c, apercebemo-nos que a flag está provavelmente em /flags/flag.txt
