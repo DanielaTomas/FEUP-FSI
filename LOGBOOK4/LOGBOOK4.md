@@ -105,7 +105,7 @@ int main(){
     }
 }
 ```
-2) Mudamos a propriedade do programa para *root* e tornámos-lo um programa Set-UID e executamos os seguintes comandos:
+2) Mudamos a propriedade do programa para *root*, tornámos-lo um programa Set-UID e executamos os seguintes comandos:
 ```
 $ sudo chown root a.out
 $ sudo chmod 4755 a.out
