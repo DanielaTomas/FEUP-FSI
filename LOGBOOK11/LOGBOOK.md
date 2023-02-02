@@ -7,7 +7,7 @@ Completamos todos os pontos presentes no guião deste lab, isto é, DNS Setup e 
 ## Task 1
 
 Por padrão, OpenSSL usa o arquivo de configuração /usr/lib/ssl/openssl.cnf. Como precisamos fazer alterações neste arquivo, vamos copiá-lo no nosso diretório atual e instruir o OpenSSL a usar essa cópia.
-A seção [CA default] do arquivo de configuração mostra a configuração padrão que precisamos preparar. Precisamos criar vários subdiretórios. Descomentamos a linha de "unique_subject" para permitir a criação de certificações com o mesmo assunto.
+A secção [CA default] do arquivo de configuração mostra a configuração padrão que precisamos preparar. Precisamos criar vários subdiretórios. Descomentamos a linha de "unique_subject" para permitir a criação de certificações com o mesmo assunto.
 
 ![](https://i.imgur.com/uSz61iW.png)
 
@@ -27,8 +27,8 @@ openssl x509 -in ca.crt -text -noout
 openssl rsa  -in ca.key -text -noout
 ```
 
-[Ficheiro com certificado de chave pública- ca.crt](ca_crt.txt)
-[Ficheiro com chave privada da CA](ca_key.txt)
+[Ficheiro com certificado de chave pública - ca.crt](ca_crt.txt)
+[Ficheiro com chave privada da CA - ca_key](ca_key.txt)
 
 **Questions:**
 **1) What part of the certificate indicates this is a CA’s certificate?!**
@@ -46,18 +46,23 @@ Quando o X509v3 Subject Key Identifier é igual ao X509v3 Authority Key Identifi
 **3) In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files.**
 
 public exponent - e:
+
 ![](https://i.imgur.com/5imGwQZ.png)
 
 private exponent - d:
+
 ![](https://i.imgur.com/pF6bzBb.png)
 
 modulus - n: 
+
 ![](https://i.imgur.com/pyFOMD5.png)
 
 secret number 1 - p:
+
 ![](https://i.imgur.com/WTwTXP3.png)
 
 secret number 2 - q:
+
 ![](https://i.imgur.com/CfzsAnb.png)
 
 ## Task 2
@@ -128,6 +133,7 @@ Não conseguimos aceder ao site, porque precisamos de carregar o certificado par
 ![](https://i.imgur.com/XDGcv2I.png)
 
 ## Task 5
+
 O objetivo desta tarefa é mostrar como PKI pode impedir ataques Man-In-The-Middle.
 
 - Selecionamos www.fnac.com como o nosso target website.
@@ -158,9 +164,9 @@ Assim, já é possível aceder ao site sem que apareça um warning:
 
 ![](https://i.imgur.com/caWMZDF.png)
 
-## CTFs
+# CTFs
 
-### Desafio 1
+## Desafio 1
 
 Depois de nos conectarmos ao servidor, verificámos que este envia sempre uma flag cifrada com RSA.
 
@@ -198,7 +204,7 @@ Primeiro, usámos a função *nextprime* do python para encontrar os números pr
 
 ![](https://i.imgur.com/JVp6Pi2.png)
 
-### Desafio 2
+## Desafio 2
 
 Neste desafio, o servidor envia duas mensagens cifradas com RSA que contêm a mesma flag. Ambas possuem o mesmo *n* mas dois expoentes públicos diferentes.
 
