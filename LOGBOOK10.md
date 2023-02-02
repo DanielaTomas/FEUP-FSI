@@ -118,9 +118,9 @@ As linhas ➀ e ➁, marcadas no script da secção 4, servem para enviar o toke
 
 Um ataque bem-sucedido não pode ser iniciado, pois o modo Editor filtra os caracteres especiais HTML e não podemos editar o conteúdo HTML interno do campo. Portanto, injetar qualquer script no campo "About me" não é possível, pois não podemos enviar a tag < script > no perfil.
 
-## CTFs
+# CTFs
 
-### Desafio 1
+## Desafio 1
 
 Depois de analisar o formulário, apercebemo-nos que este é vulnerável a XSS. Portanto, para obter a flag, inserimos no formulário um script que faz com que o botão "Give the flag" que estava desativado seja acionado e, assim, o administrador responde ao pedido e a flag aparece.
 
@@ -130,7 +130,7 @@ Depois de analisar o formulário, apercebemo-nos que este é vulnerável a XSS. 
 
 ![](https://i.imgur.com/iOP5gSy.png)
 
-### Desafio 2
+## Desafio 2
 
 Ao analisar o servidor web, conseguimos identificar que o comando ping está a ser implementado pelo servidor.
 
