@@ -137,7 +137,7 @@ int main(){
     return 0;
 }
 ```
-2) Compilamos o código seguinte, mudamos a sua propriedade para *owner* e tornámos-lo um programa Set-UID:
+2) Compilamos o seguinte código, mudamos a sua propriedade para *owner* e tornámo-lo um programa Set-UID:
 ```
 #include <stdio.h>
 #include <stdlib.h>
