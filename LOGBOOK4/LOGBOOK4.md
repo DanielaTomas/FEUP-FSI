@@ -86,7 +86,7 @@ int main(){
     return 0 ;
 }
 ```
-O resultado está no file4. Como esperado, o *output* as variáveis de ambiente do processo pai.
+O resultado está no file4. Como esperado, o *output* contém as variáveis de ambiente do processo pai.
 
 ## Task 5
 
